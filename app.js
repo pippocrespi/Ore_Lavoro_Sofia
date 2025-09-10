@@ -31,8 +31,8 @@ window.addEventListener("DOMContentLoaded", () => {
       }
 
     } catch(err) {
-      console.error("❌ Errore durante l'invio:", err);
-      status.textContent = "❌ Errore durante l'invio";
+      console.error("❌ Errore Durante l'invio:", err);
+      status.textContent = "❌ Errore Durante l'invio";
       status.style.color = "red";
     }
   }
