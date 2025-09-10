@@ -4,24 +4,22 @@ window.addEventListener("DOMContentLoaded", () => {
   const btnInvia = document.getElementById("btnInviaDatiSheet");
   const status = document.getElementById("status");
 
-  // Imposta la data odierna automaticamente
+  // Imposta data odierna automaticamente
   const dataInput = form.querySelector('input[name="dataIngresso"]');
   if (dataInput) dataInput.value = new Date().toISOString().split('T')[0];
 
   async function inviaDatiAlFoglio() {
-    const dati = {
-      dataIngresso: form.querySelector('input[name="dataIngresso"]').value,
-      oraEntrata: form.querySelector('input[name="oraEntrata"]').value,
-      oraUscita: form.querySelector('input[name="oraUscita"]').value,
-      pranzo: form.querySelector('input[name="pranzo"]').checked,
-      cena: form.querySelector('input[name="cena"]').checked
-    };
+    const dati = new FormData();
+    dati.append("dataIngresso", form.querySelector('input[name="dataIngresso"]').value);
+    dati.append("oraEntrata", form.querySelector('input[name="oraEntrata"]').value);
+    dati.append("oraUscita", form.querySelector('input[name="oraUscita"]').value);
+    dati.append("pranzo", form.querySelector('input[name="pranzo"]').checked);
+    dati.append("cena", form.querySelector('input[name="cena"]').checked);
 
     try {
-      const response = await fetch("https://script.google.com/macros/s/AKfycbyJlFF-7NbtJpvmhZSHylqPVlF7TvTuNq5wKjxfZ8o__9T6e42Y3hTvbrt8NOrEIg0C/exec", {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbyGk1dYRdk4NdxGQz619MFg5N_pHRJkUP1yK0hgSXu-DLIbQUbji86Jpj6-5R19F3Zq/exec", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dati)
+        body: dati
       });
 
       const result = await response.json();
