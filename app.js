@@ -1,10 +1,11 @@
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwEO93-IyWgbg6lJdSC2uRqHvYfDLirdhDMcQl1vd3zES_eHazNAV9629TZyqccw5H2/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwuvwANtRTrnc8eHZgiREtJeKIjtK1pPP57RmSpA_8E4YzYK3MjFai4ixmmfoUjed73/exec";
 
 window.addEventListener("DOMContentLoaded", () => {
   const today = new Date();
   document.querySelector('input[name="dataIngresso"]').value = today.toISOString().split('T')[0];
 });
 
+// Invio dati
 document.getElementById("mealForm").addEventListener("submit", (e) => {
   e.preventDefault();
   const form = e.target;
@@ -29,6 +30,7 @@ document.getElementById("mealForm").addEventListener("submit", (e) => {
     });
 });
 
+// Stampa PDF
 document.getElementById("pdfBtn").addEventListener("click", () => {
   const mese = document.getElementById("mese").value;
   const anno = document.getElementById("anno").value;
