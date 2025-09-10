@@ -22,8 +22,6 @@ window.addEventListener("DOMContentLoaded", () => {
         body: dati
       });
 
-      const result = await response.json();
-
       if (result.status === "ok") {
         status.textContent = "✅ Dati salvati nel foglio " + result.nomeFoglio;
         status.style.color = "green";
