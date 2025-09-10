@@ -6,7 +6,7 @@ window.addEventListener("DOMContentLoaded", () => {
   if(dataInput) dataInput.value = today.toISOString().split('T')[0];
 
   // Funzione di invio dati
-  async function inviaDatiAlFoglio() {
+  async function btnInviaDatiSheet() {
     const dati = {
       dataIngresso: document.getElementById('dataIngresso')?.value || '',
       oraEntrata: document.getElementById('oraEntrata')?.value || '',
