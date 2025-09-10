@@ -1,17 +1,14 @@
 window.addEventListener("DOMContentLoaded", () => {
 
-  // Seleziona gli elementi del form
   const form = document.getElementById("mealForm");
   const btnInvia = document.getElementById("btnInviaDatiSheet");
   const status = document.getElementById("status");
 
-  // Imposta data corrente nel campo data ingresso
+  // Imposta data odierna
   const dataInput = form.querySelector('input[name="dataIngresso"]');
   if(dataInput) dataInput.value = new Date().toISOString().split('T')[0];
 
-  // Funzione per inviare i dati al foglio Google
   async function inviaDatiAlFoglio() {
-    // Raccogli i valori
     const dati = {
       dataIngresso: form.querySelector('input[name="dataIngresso"]').value,
       oraEntrata: form.querySelector('input[name="oraEntrata"]').value,
@@ -21,11 +18,14 @@ window.addEventListener("DOMContentLoaded", () => {
     };
 
     try {
-      // Inserisci qui il tuo URL Apps Script
-      const url = "https://script.google.com/macros/s/AKfycbwVhY4KPQBkeAELAo-2gh_Hj70rZa21WzMFgvbJyz2TGmKrBxNG-BbQoqXTW4hi6kVI/exec?data="
-                  + encodeURIComponent(JSON.stringify(dati));
+      const response = await fetch("https://script.google.com/macros/s/AKfycby4DRfky_78FLMzTddxzyRqIgmt-VoywIbu9NRiJeom0IJqJXPnkKqlLhYssasnwhb8/exec", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dati)
+      });
 
-      const response = await fetch(url);
       const result = await response.json();
 
       if(result.status === "ok") {
@@ -43,7 +43,6 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Collega il bottone all'invio dati
   if(btnInvia) btnInvia.addEventListener("click", inviaDatiAlFoglio);
 
 });
