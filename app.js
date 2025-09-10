@@ -1,16 +1,10 @@
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzAxtG26hagGZAjVvvyJHvYfhn4aUpHlrIr8Px34wT7ghIEf6viZrMXat6yiIhMKHwD/exec"; // URL della Web App di Apps Script
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwEO93-IyWgbg6lJdSC2uRqHvYfDLirdhDMcQl1vd3zES_eHazNAV9629TZyqccw5H2/exec";
 
 window.addEventListener("DOMContentLoaded", () => {
   const today = new Date();
-  const yyyy = today.getFullYear();
-  let mm = today.getMonth() + 1;
-  let dd = today.getDate();
-  if (mm < 10) mm = "0" + mm;
-  if (dd < 10) dd = "0" + dd;
-  document.querySelector('input[name="dataIngresso"]').value = `${yyyy}-${mm}-${dd}`;
+  document.querySelector('input[name="dataIngresso"]').value = today.toISOString().split('T')[0];
 });
 
-// Invio dati
 document.getElementById("mealForm").addEventListener("submit", (e) => {
   e.preventDefault();
   const form = e.target;
@@ -22,35 +16,32 @@ document.getElementById("mealForm").addEventListener("submit", (e) => {
     cena: form.cena.checked
   };
 
-  fetch(WEB_APP_URL, {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: { "Content-Type": "application/json" }
-  })
-  .then(res => res.json())
-  .then(res => {
-    document.getElementById("status").textContent = "✅ Dati salvati nel foglio " + res.nomeFoglio;
-    form.reset();
-  })
-  .catch(err => {
-    document.getElementById("status").textContent = "❌ Errore: " + err.message;
-  });
+  const url = WEB_APP_URL + "?data=" + encodeURIComponent(JSON.stringify(data));
+
+  fetch(url)
+    .then(res => res.json())
+    .then(res => {
+      document.getElementById("status").textContent = "✅ Dati salvati nel foglio " + res.nomeFoglio;
+      form.reset();
+    })
+    .catch(err => {
+      document.getElementById("status").textContent = "❌ Errore: " + err.message;
+    });
 });
 
-// Stampa PDF
 document.getElementById("pdfBtn").addEventListener("click", () => {
   const mese = document.getElementById("mese").value;
   const anno = document.getElementById("anno").value;
   const nomeFoglio = mese + "_" + anno;
+  const url = WEB_APP_URL + "?pdf=true&foglio=" + encodeURIComponent(nomeFoglio);
 
-  fetch(`${WEB_APP_URL}?pdf=true&foglio=${nomeFoglio}`)
-    .then(res => res.blob())
-    .then(blob => {
+  fetch(url)
+    .then(res => res.json())
+    .then(result => {
       const a = document.createElement("a");
-      a.href = URL.createObjectURL(blob);
-      a.download = nomeFoglio + "_Sofia.pdf";
+      a.href = "data:application/pdf;base64," + result.base64;
+      a.download = result.nome;
       a.click();
-      URL.revokeObjectURL(a.href);
     })
     .catch(err => alert("Errore PDF: " + err.message));
 });
