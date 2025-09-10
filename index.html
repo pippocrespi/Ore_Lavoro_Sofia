@@ -7,55 +7,19 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Rilevazione Presenze e Pasti</h1>
+<h1>Rilevazione Presenze e Pasti</h1>
 
-  <!-- Form dati -->
-  <form id="mealForm">
-    <label>Data ingresso
-      <input type="date" name="dataIngresso" required>
-    </label>
-    <label>Ora entrata
-      <input type="time" name="oraEntrata" required>
-    </label>
-    <label>Ora uscita
-      <input type="time" name="oraUscita" required>
-    </label>
-    <label><input type="checkbox" name="pranzo"> Pranzo</label>
-    <label><input type="checkbox" name="cena"> Cena</label>
-    <button type="button" id="btnInviaDatiSheet">Invia</button>
-  </form>
+<form id="mealForm">
+  <label>Data ingresso<input type="date" name="dataIngresso" required></label>
+  <label>Ora entrata<input type="time" name="oraEntrata" required></label>
+  <label>Ora uscita<input type="time" name="oraUscita" required></label>
+  <label><input type="checkbox" name="pranzo"> Pranzo</label>
+  <label><input type="checkbox" name="cena"> Cena</label>
+  <button type="submit">Invia</button>
+</form>
 
-  <div class="pdf-section">
-    <label>Mese:
-      <select id="mese">
-        <option value="Gennaio">Gennaio</option>
-        <option value="Febbraio">Febbraio</option>
-        <option value="Marzo">Marzo</option>
-        <option value="Aprile">Aprile</option>
-        <option value="Maggio">Maggio</option>
-        <option value="Giugno">Giugno</option>
-        <option value="Luglio">Luglio</option>
-        <option value="Agosto">Agosto</option>
-        <option value="Settembre" selected>Settembre</option>
-        <option value="Ottobre">Ottobre</option>
-        <option value="Novembre">Novembre</option>
-        <option value="Dicembre">Dicembre</option>
-      </select>
-    </label>
+<p id="status"></p>
 
-    <label>Anno:
-      <select id="anno">
-        <option value="2024">2024</option>
-        <option value="2025" selected>2025</option>
-        <option value="2026">2026</option>
-      </select>
-    </label>
-    
-    <button type="button" id="btnStampaPDF">Stampa PDF</button>
-  </div>
-
-  <p id="status"></p>
-
-  <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
