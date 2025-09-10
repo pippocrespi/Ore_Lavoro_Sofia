@@ -1,4 +1,4 @@
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxDdsgjOseC2Txb0iJTZ3-MWe0N8yATWf0xfUSIU9-Xn3ZpE9ZfkPo7MeQ61RuXxiWr/exec"; // URL della Web App di Apps Script
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzAxtG26hagGZAjVvvyJHvYfhn4aUpHlrIr8Px34wT7ghIEf6viZrMXat6yiIhMKHwD/exec"; // URL della Web App di Apps Script
 
 window.addEventListener("DOMContentLoaded", () => {
   const today = new Date();
