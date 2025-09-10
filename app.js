@@ -4,11 +4,10 @@ window.addEventListener("DOMContentLoaded", () => {
   const btnInvia = document.getElementById("btnInviaDatiSheet");
   const status = document.getElementById("status");
 
-  // Imposta la data odierna
+  // Imposta la data odierna automaticamente
   const dataInput = form.querySelector('input[name="dataIngresso"]');
   if (dataInput) dataInput.value = new Date().toISOString().split('T')[0];
 
-  // Funzione per inviare i dati al foglio
   async function inviaDatiAlFoglio() {
     const dati = {
       dataIngresso: form.querySelector('input[name="dataIngresso"]').value,
@@ -19,7 +18,7 @@ window.addEventListener("DOMContentLoaded", () => {
     };
 
     try {
-      const response = await fetch("https://script.google.com/macros/s/AKfycby4DRfky_78FLMzTddxzyRqIgmt-VoywIbu9NRiJeom0IJqJXPnkKqlLhYssasnwhb8/exec", {
+      const response = await fetch("https://script.google.com/macros/s/AKfycbyJlFF-7NbtJpvmhZSHylqPVlF7TvTuNq5wKjxfZ8o__9T6e42Y3hTvbrt8NOrEIg0C/exec", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dati)
@@ -35,14 +34,13 @@ window.addEventListener("DOMContentLoaded", () => {
         status.style.color = "red";
       }
 
-    } catch (err) {
+    } catch(err) {
       console.error("❌ Errore durante l'invio:", err);
       status.textContent = "❌ Errore durante l'invio";
       status.style.color = "red";
     }
   }
 
-  // Collega il bottone all'invio
   if (btnInvia) btnInvia.addEventListener("click", inviaDatiAlFoglio);
 
 });
