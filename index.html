@@ -7,19 +7,25 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Rilevazione Presenze e Pasti</h1>
+  <h1>Rilevazione Presenze e Pasti</h1>
 
-<form id="mealForm">
-  <label>Data ingresso<input type="date" name="dataIngresso" required></label>
-  <label>Ora entrata<input type="time" name="oraEntrata" required></label>
-  <label>Ora uscita<input type="time" name="oraUscita" required></label>
-  <label><input type="checkbox" name="pranzo"> Pranzo</label>
-  <label><input type="checkbox" name="cena"> Cena</label>
-  <button type="button">Invia</button>
-</form>
+  <form id="mealForm">
+    <label>Data ingresso
+      <input type="date" name="dataIngresso" required>
+    </label>
+    <label>Ora entrata
+      <input type="time" name="oraEntrata" required>
+    </label>
+    <label>Ora uscita
+      <input type="time" name="oraUscita" required>
+    </label>
+    <label><input type="checkbox" name="pranzo"> Pranzo</label>
+    <label><input type="checkbox" name="cena"> Cena</label>
+    <button type="button" id="btnInviaDati">Invia</button>
+  </form>
 
-<p id="status"></p>
+  <p id="status"></p>
 
-<script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
