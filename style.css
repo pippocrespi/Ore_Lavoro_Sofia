@@ -1,0 +1,42 @@
+body {
+  font-family: sans-serif;
+  padding: 1rem;
+  background: #f4f6f8;
+  color: #333;
+  margin: 0;
+}
+h1 { text-align: center; font-size: 1.5rem; margin-bottom: 1rem; }
+
+form, .pdf-section {
+  display: grid;
+  gap: 1rem;
+  max-width: 500px;
+  margin: auto 0.5rem auto 0.5rem;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+label { display: flex; flex-direction: column; font-size: 1rem; }
+input, select, button {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+button {
+  background: #0077cc;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+button:hover { background: #005fa3; }
+
+#status { text-align: center; margin-top: 1rem; font-weight: bold; }
+
+/* Mobile */
+@media (max-width: 600px) {
+  form, .pdf-section { width: 95%; padding: 0.8rem; }
+  input, select, button { font-size: 0.9rem; }
+}
