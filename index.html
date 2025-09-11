@@ -30,17 +30,17 @@
     <label>Ora entrata
   <div class="suggestions" id="entrataSuggerimenti">
     <span data-target="oraEntrata" data-time="07:00">07:00</span>
-    <span data-target="oraEntrata" data-time="08:30">08:30</span>
-    <span data-target="oraEntrata" data-time="09:00">09:00</span>
+    <span data-target="oraEntrata" data-time="09:30">09:30</span>
+    <span data-target="oraEntrata" data-time="16:00">16:00</span>
   </div>
   <input type="time" id="oraEntrata" name="oraEntrata" required>
 </label>
 
 <label>Ora uscita
   <div class="suggestions" id="uscitaSuggerimenti">
-    <span data-target="oraUscita" data-time="17:00">17:00</span>
-    <span data-target="oraUscita" data-time="18:00">18:00</span>
-    <span data-target="oraUscita" data-time="18:30">18:30</span>
+    <span data-target="oraUscita" data-time="22:00">22:00</span>
+    <span data-target="oraUscita" data-time="22:30">22:30</span>
+    <span data-target="oraUscita" data-time="23:30">23:30</span>
   </div>
   <input type="time" id="oraUscita" name="oraUscita" required>
 </label>
@@ -67,7 +67,7 @@
       formData.append("pranzo", document.querySelector("#btnPranzo").checked);
       formData.append("cena", document.querySelector("#btnCena").checked);
 
-      fetch("https://script.google.com/macros/s/AKfycby23bFsyTDsPyBPAurcNsuoYHDjb7NjyVAonkzAk-OtQQW9bA7wqTiYqBCbSxGl7QYV/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbw2X3ACrO0tOOoaRYz0PA_UJFosTy84ar45jhBYAFzJS-X6RKvRcCnAmDzizzv-Fr2_/exec", {
         method: "POST",
         body: formData
       })
