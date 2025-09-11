@@ -131,6 +131,19 @@ window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("dataIngresso").value = `${yyyy}-${mm}-${dd}`;
 });
 
+  // All'inizio, crea un riferimento alla scritta "Ultimo orario inserito"
+const ultimoOrario = document.getElementById("ultimoOrario");
+
+// --- Mostra subito l'ultimo inserimento salvato in locale ---
+window.addEventListener("DOMContentLoaded", () => {
+  const ultimo = localStorage.getItem("ultimoOrario");
+  if (ultimo) {
+    ultimoOrario.textContent = "Ultimo orario inserito: " + ultimo;
+  } else {
+    ultimoOrario.textContent = "Ultimo orario inserito: Caricamento...";
+  }
+});
+
 // invio dati
 document.getElementById("btnInvia").addEventListener("click", () => {
   const formData = new FormData();
@@ -182,22 +195,7 @@ document.getElementById("btnInvia").addEventListener("click", () => {
   window.open(`${scriptUrl}?mese=${encodeURIComponent(mese)}&anno=${encodeURIComponent(anno)}`, "_blank");
 });
 
-  // Dopo che l'utente invia i dati
-function aggiornaUltimoOrario() {
-  const oggi = new Date();
-  // Salva solo giorno e mese
-  const giorno = oggi.toLocaleDateString("it-IT", { weekday: "long", day: "numeric", month: "long" });
-  localStorage.setItem("ultimoOrario", giorno);
-  document.getElementById("ultimoOrario").textContent = "Ultimo orario inserito: " + giorno;
-}
 
-// All'avvio dell'app, controlla se c'è già un valore salvato
-window.addEventListener("load", () => {
-  const ultimo = localStorage.getItem("ultimoOrario");
-  if (ultimo) {
-    document.getElementById("ultimoOrario").textContent = "Ultimo orario inserito: " + ultimo;
-  }
-});
 
 
 </script>
