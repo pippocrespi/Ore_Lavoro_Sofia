@@ -87,7 +87,7 @@
       <option>2026</option>
     </select>
   </label>
-  <button type="button" id="btnPDF">Stampaaa PDF</button>
+  <button type="button" id="btnPDF">Stampa PDF</button>
 </form>
 
 
@@ -169,15 +169,23 @@ document.getElementById("btnInvia").addEventListener("click", () => {
 });
 
   //script esportare PDF
+  window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("btnPDF").addEventListener("click", () => {
-  const mese = document.getElementById("mese").value;
-  const anno = document.getElementById("anno").value;
+    const mese = document.getElementById("mese").value;
+    const anno = document.getElementById("anno").value;
 
-  const url = `https://script.google.com/macros/s/AKfycbxiHEJ8RjcvwgQoplK8JPw9VDucZV30CLkLWczx26DcKUj_Pk5f3ZhwrjoeDys5ipUU/exec?mese=${mese}&anno=${anno}`;
-  
-  // apre il PDF in una nuova scheda
-  window.open(url, "_blank");
+    const url = `https://script.google.com/macros/s/AKfycbxiHEJ8RjcvwgQoplK8JPw9VDucZV30CLkLWczx26DcKUj_Pk5f3ZhwrjoeDys5ipUU/exec?mese=${mese}&anno=${anno}`;
+
+    // Crea link temporaneo per scaricare
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${mese}_${anno}_Sofia.pdf`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  });
 });
+
 </script>
 </body>
 </html>
