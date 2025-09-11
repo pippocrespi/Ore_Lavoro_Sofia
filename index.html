@@ -139,7 +139,7 @@ document.getElementById("btnInvia").addEventListener("click", () => {
   formData.append("pranzo", pranzo);
   formData.append("cena", cena);
 
-  fetch("https://script.google.com/macros/s/AKfycbxgglcr-Nru_W2pQ2DtfVc11qXu7kE-ZdNfxvyP6obKhyEEPFx9ipo0sM-dQNvvLcIY/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbwgqMg9hoKpw54VRvXy1IffKY5dJWXCfpcRBXYapewB5htwFl9XJM4HB3_Z_AbFWHME/exec", {
     method: "POST",
     body: formData
   })
@@ -170,13 +170,16 @@ document.getElementById("btnInvia").addEventListener("click", () => {
 
   //script esportare PDF
  document.getElementById("btnPDF").addEventListener("click", () => {
+  // Prendi i valori dai select
   const mese = document.getElementById("mese").value;
   const anno = document.getElementById("anno").value;
 
-  // Apri il PDF in una nuova scheda
-  window.open(`https://script.google.com/macros/s/AKfycbxgglcr-Nru_W2pQ2DtfVc11qXu7kE-ZdNfxvyP6obKhyEEPFx9ipo0sM-dQNvvLcIY/exec?mese=${mese}&anno=${anno}`, "_blank");
-});
+  // URL del tuo Web App di Google Apps Script
+  const scriptUrl = "https://script.google.com/macros/s/AKfycbwgqMg9hoKpw54VRvXy1IffKY5dJWXCfpcRBXYapewB5htwFl9XJM4HB3_Z_AbFWHME/exec";
 
+  // Apri il PDF in una nuova scheda che parte con il download
+  window.open(`${scriptUrl}?mese=${encodeURIComponent(mese)}&anno=${encodeURIComponent(anno)}`, "_blank");
+});
 
 </script>
 </body>
