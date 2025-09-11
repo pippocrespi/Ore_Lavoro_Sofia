@@ -3,8 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rilevazione Presenze e Pasti</title>
-  <link rel="stylesheet" href="style.css">
+  <title>PWA Rilevazione Pasti</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 1rem;
+      background: #f4f6f8;
+      font-size: 20px;
+    }
+    h1 { text-align: center; font-size: 24px; }
+    form { display: grid; gap: 1rem; max-width: 400px; margin: auto; background: #fff; padding: 1rem; border-radius: 12px; }
+    label { display: flex; flex-direction: column; }
+    input, select { font-size: 18px; padding: 0.6rem; border-radius: 8px; border: 1px solid #ccc; margin-top: 0.4rem; }
+    button { padding: 0.8rem; font-size: 20px; background: #0077cc; color: #fff; border: none; border-radius: 10px; cursor: pointer; }
+    button:hover { background: #005fa3; }
+    #status { text-align: center; margin-top: 1rem; font-weight: bold; }
+  </style>
 </head>
 <body>
   <h1>Rilevazione Presenze e Pasti</h1>
@@ -19,13 +33,45 @@
     <label>Ora uscita
       <input type="time" name="oraUscita" required>
     </label>
-    <label><input type="checkbox" name="pranzo"> Pranzo</label>
-    <label><input type="checkbox" name="cena"> Cena</label>
-    <button type="button" id="btnInviaDati">Invia</button>
+    <label>
+      <input type="checkbox" id="btnPranzo"> Pranzo
+    </label>
+    <label>
+      <input type="checkbox" id="btnCena"> Cena
+    </label>
+    <button type="button" id="btnInvia">Invia</button>
   </form>
 
   <p id="status"></p>
 
-  <script src="app.js"></script>
+  <script>
+    const btnInvia = document.getElementById("btnInvia");
+    const status = document.getElementById("status");
+
+    btnInvia.addEventListener("click", () => {
+      const formData = new FormData();
+      formData.append("dataIngresso", document.querySelector("[name='dataIngresso']").value);
+      formData.append("oraEntrata", document.querySelector("[name='oraEntrata']").value);
+      formData.append("oraUscita", document.querySelector("[name='oraUscita']").value);
+      formData.append("pranzo", document.querySelector("#btnPranzo").checked);
+      formData.append("cena", document.querySelector("#btnCena").checked);
+
+      fetch("https://script.google.com/macros/s/AKfycby23bFsyTDsPyBPAurcNsuoYHDjb7NjyVAonkzAk-OtQQW9bA7wqTiYqBCbSxGl7QYV/exec", {
+        method: "POST",
+        body: formData
+      })
+      .then(r => r.json())
+      .then(res => {
+        if (res.success) {
+          status.textContent = "✅ Dati salvati nel foglio " + res.sheet;
+        } else {
+          status.textContent = "❌ Errore: " + res.error;
+        }
+      })
+      .catch(err => {
+        status.textContent = "❌ Errore di rete: " + err.message;
+      });
+    });
+  </script>
 </body>
 </html>
