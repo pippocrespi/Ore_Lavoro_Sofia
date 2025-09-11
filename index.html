@@ -1,156 +1,126 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PWA Rilevazione Pasti</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #f4f6f8;
-      font-size: 20px;
-      padding: 1rem;
-    }
-    h1 { text-align: center; font-size: 26px; margin-bottom: 1rem; }
-    form, .pdf-section {
-      display: grid;
-      gap: 1rem;
-      max-width: 420px;
-      margin: auto;
-      background: #fff;
-      padding: 1.2rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    label { display: flex; flex-direction: column; font-size: 18px; }
-    input, select { font-size: 18px; padding: 0.6rem; border-radius: 8px; border: 1px solid #ccc; margin-top: 0.3rem; }
-    .suggestions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
-    .suggestions span {
-      background: #0077cc; color: #fff; padding: 0.3rem 0.6rem;
-      border-radius: 6px; cursor: pointer; font-size: 16px;
-    }
-    .toggle-btn {
-      padding: 0.8rem;
-      font-size: 18px;
-      border: 2px solid #0077cc;
-      background: #fff;
-      color: #0077cc;
-      border-radius: 10px;
-      cursor: pointer;
-      text-align: center;
-      flex: 1;
-    }
-    .toggle-btn.active { background: #0077cc; color: #fff; }
-    .btn-group { display: flex; gap: 1rem; justify-content: center; margin-top: 0.5rem; }
-    button#btnInvia, button#btnPDF {
-      padding: 0.8rem;
-      font-size: 20px;
-      background: #0077cc;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      width: 100%;
-    }
-    button:hover { background: #005fa3; }
-    #status { text-align: center; margin-top: 1rem; font-weight: bold; font-size: 18px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PWA Rilevazione Pasti</title>
+<style>
+  body {
+    font-family: sans-serif;
+    padding: 1rem;
+    background: #f4f6f8;
+    font-size: 20px;
+  }
+  h1 { text-align: center; font-size: 24px; margin-bottom: 1rem; }
+  form { display: grid; gap: 1rem; max-width: 400px; margin: auto; background: #fff; padding: 1rem; border-radius: 12px; }
+  label { display: flex; flex-direction: column; }
+  input, select { font-size: 18px; padding: 0.6rem; border-radius: 8px; border: 1px solid #ccc; margin-top: 0.4rem; }
+  .suggestions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+  .suggestions span { cursor: pointer; background: #0077cc; color: #fff; padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 16px; }
+  .checkbox-btn { display: inline-block; padding: 0.5rem 1rem; border: 2px solid #0077cc; border-radius: 10px; cursor: pointer; font-size: 18px; margin-right: 1rem; }
+  .checkbox-btn.active { background: #0077cc; color: #fff; }
+  button { padding: 0.8rem; font-size: 20px; background: #0077cc; color: #fff; border: none; border-radius: 10px; cursor: pointer; }
+  button:hover { background: #005fa3; }
+  #status { text-align: center; margin-top: 1rem; font-weight: bold; }
+</style>
 </head>
 <body>
-  <h1>Rilevazione Presenze e Pasti</h1>
+<h1>Rilevazione Presenze e Pasti</h1>
 
-  <form id="mealForm">
-    <label>Data ingresso
-      <input type="date" id="dataIngresso" name="dataIngresso" required>
-    </label>
+<form id="mealForm">
+  <label>Data ingresso
+    <input type="date" id="dataIngresso" name="dataIngresso" required>
+  </label>
 
-    <label>Ora entrata
-      <div class="suggestions" id="entrataSuggerimenti">
-        <span data-target="oraEntrata" data-time="07:00">07:00</span>
-        <span data-target="oraEntrata" data-time="09:30">09:30</span>
-        <span data-target="oraEntrata" data-time="12:00">12:00</span>
-        <span data-target="oraEntrata" data-time="16:00">16:00</span>
-      </div>
-      <input type="time" id="oraEntrata" name="oraEntrata" required>
-    </label>
-
-    <label>Ora uscita
-      <div class="suggestions" id="uscitaSuggerimenti">
-        <span data-target="oraUscita" data-time="22:00">22:00</span>
-        <span data-target="oraUscita" data-time="22:30">22:30</span>
-        <span data-target="oraUscita" data-time="23:00">23:00</span>
-        <span data-target="oraUscita" data-time="23:30">23:30</span>
-      </div>
-      <input type="time" id="oraUscita" name="oraUscita" required>
-    </label>
-
-    <div class="btn-group">
-      <button type="button" id="btnPranzo" class="toggle-btn">Pranzo</button>
-      <button type="button" id="btnCena" class="toggle-btn">Cena</button>
+  <label>Ora entrata
+    <div class="suggestions" id="entrataSuggerimenti">
+      <span data-target="oraEntrata" data-time="07:00">07:00</span>
+      <span data-target="oraEntrata" data-time="09:30">09:30</span>
+      <span data-target="oraEntrata" data-time="12:00">12:00</span>
+      <span data-target="oraEntrata" data-time="16:00">16:00</span>
     </div>
+    <input type="time" id="oraEntrata" name="oraEntrata" required>
+  </label>
 
-    <button type="button" id="btnInvia">Invia</button>
-  </form>
+  <label>Ora uscita
+    <div class="suggestions" id="uscitaSuggerimenti">
+      <span data-target="oraUscita" data-time="22:00">22:00</span>
+      <span data-target="oraUscita" data-time="22:30">22:30</span>
+      <span data-target="oraUscita" data-time="23:00">23:00</span>
+      <span data-target="oraUscita" data-time="23:30">23:30</span>
+    </div>
+    <input type="time" id="oraUscita" name="oraUscita" required>
+  </label>
 
-  <div class="pdf-section">
-    <label>Mese:
-      <select id="mese">
-        <option value="Gennaio">Gennaio</option>
-        <option value="Febbraio">Febbraio</option>
-        <option value="Marzo">Marzo</option>
-        <option value="Aprile">Aprile</option>
-        <option value="Maggio">Maggio</option>
-        <option value="Giugno">Giugno</option>
-        <option value="Luglio">Luglio</option>
-        <option value="Agosto">Agosto</option>
-        <option value="Settembre" selected>Settembre</option>
-        <option value="Ottobre">Ottobre</option>
-        <option value="Novembre">Novembre</option>
-        <option value="Dicembre">Dicembre</option>
-      </select>
-    </label>
-
-    <label>Anno:
-      <select id="anno">
-        <option value="2024">2024</option>
-        <option value="2025" selected>2025</option>
-        <option value="2026">2026</option>
-      </select>
-    </label>
-
-    <button type="button" id="btnPDF">Stampa PDF</button>
+  <div>
+    <span id="btnPranzo" class="checkbox-btn">Pranzo</span>
+    <span id="btnCena" class="checkbox-btn">Cena</span>
   </div>
 
-  <p id="status"></p>
+  <button type="button" id="btnInvia">Invia</button>
+</form>
 
-  <script>
-    // Stato bottoni toggle
-    let pranzo = false;
-    let cena = false;
+<p id="status"></p>
 
-    const status = document.getElementById("status");
+<script>
+const status = document.getElementById("status");
+const btnPranzo = document.getElementById("btnPranzo");
+const btnCena = document.getElementById("btnCena");
+let pranzo = false;
+let cena = false;
 
-    document.getElementById("btnPranzo").addEventListener("click", () => {
-      pranzo = !pranzo;
-      document.getElementById("btnPranzo").classList.toggle("active", pranzo);
-    });
+// toggle pranzo/cena
+btnPranzo.addEventListener("click", () => {
+  pranzo = !pranzo;
+  btnPranzo.classList.toggle("active", pranzo);
+});
+btnCena.addEventListener("click", () => {
+  cena = !cena;
+  btnCena.classList.toggle("active", cena);
+});
 
-    document.getElementById("btnCena").addEventListener("click", () => {
-      cena = !cena;
-      document.getElementById("btnCena").classList.toggle("active", cena);
-    });
+// suggerimenti orari
+document.querySelectorAll(".suggestions span").forEach(span => {
+  span.addEventListener("click", () => {
+    const targetId = span.dataset.target;
+    const time = span.dataset.time;
+    document.getElementById(targetId).value = time;
+  });
+});
 
-    // Suggerimenti orari
-    document.querySelectorAll(".suggestions span").forEach(span => {
-      span.addEventListener("click", () => {
-        const targetId = span.dataset.target;
-        const time = span.dataset.time;
-        document.getElementById(targetId).value = time;
-      });
-    });
+// setta automaticamente la data odierna
+window.addEventListener("DOMContentLoaded", () => {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  let mm = today.getMonth() + 1;
+  let dd = today.getDate();
+  if (mm < 10) mm = "0" + mm;
+  if (dd < 10) dd = "0" + dd;
+  document.getElementById("dataIngresso").value = `${yyyy}-${mm}-${dd}`;
+});
 
-    // Imposta data di oggi
-    window.addEventListener("DOMContentLoaded", () => {
+// invio dati
+document.getElementById("btnInvia").addEventListener("click", () => {
+  const formData = new FormData();
+  formData.append("dataIngresso", document.getElementById("dataIngresso").value);
+  formData.append("oraEntrata", document.getElementById("oraEntrata").value);
+  formData.append("oraUscita", document.getElementById("oraUscita").value);
+  formData.append("pranzo", pranzo);
+  formData.append("cena", cena);
+
+  fetch("https://script.google.com/macros/s/AKfycbwxKFyJSxpPKaDzoM3BPTEssXtTVv-1DL4i0L1cm2Rha7MLWOk_8RXvlKsLjTmgEg4m/exec", {
+    method: "POST",
+    body: formData
+  })
+  .then(r => r.json())
+  .then(res => {
+    if(res.success){
+      status.textContent = "✅ Dati salvati nel foglio " + res.sheet;
+      pranzo = false; cena = false;
+      btnPranzo.classList.remove("active");
+      btnCena.classList.remove("active");
+      document.getElementById("mealForm").reset();
+      // reset data a oggi
       const today = new Date();
       const yyyy = today.getFullYear();
       let mm = today.getMonth() + 1;
@@ -158,63 +128,14 @@
       if (mm < 10) mm = "0" + mm;
       if (dd < 10) dd = "0" + dd;
       document.getElementById("dataIngresso").value = `${yyyy}-${mm}-${dd}`;
-    });
-
-    // Invio dati
-    document.getElementById("btnInvia").addEventListener("click", () => {
-      const formData = new FormData();
-      formData.append("dataIngresso", document.getElementById("dataIngresso").value);
-      formData.append("oraEntrata", document.getElementById("oraEntrata").value);
-      formData.append("oraUscita", document.getElementById("oraUscita").value);
-      formData.append("pranzo", pranzo);
-      formData.append("cena", cena);
-
-      fetch("https://script.google.com/macros/s/AKfycbwxKFyJSxpPKaDzoM3BPTEssXtTVv-1DL4i0L1cm2Rha7MLWOk_8RXvlKsLjTmgEg4m/exec", {
-        method: "POST",
-        body: formData
-      })
-      .then(r => r.json())
-      .then(res => {
-        if(res.success){
-          status.textContent = "✅ Dati salvati nel foglio " + res.sheet;
-        } else {
-          status.textContent = "❌ Errore: " + res.error;
-        }
-      })
-      .catch(err => {
-        status.textContent = "❌ Errore di rete: " + err.message;
-      });
-    });
-
-    // Stampa PDF
-    // Seleziono il pulsante e lo status
-const btnPDF = document.getElementById("btnPDF");
-const status = document.getElementById("status");
-
-btnPDF.addEventListener("click", () => {
-  const mese = document.getElementById("mese").value;
-  const anno = document.getElementById("anno").value;
-
-  // Chiamata GET al Web App
-  fetch(`https://script.google.com/macros/s/AKfycbwxKFyJSxpPKaDzoM3BPTEssXtTVv-1DL4i0L1cm2Rha7MLWOk_8RXvlKsLjTmgEg4m/exec?mese=${mese}&anno=${anno}`)
-    .then(response => response.json())
-    .then(res => {
-      if (res.success) {
-        const a = document.createElement("a");
-        a.href = "data:application/pdf;base64," + res.base64;
-        a.download = res.nome;
-        a.click();
-        status.textContent = "✅ PDF generato!";
-      } else {
-        status.textContent = "❌ Errore: " + res.error;
-      }
-    })
-    .catch(err => {
-      status.textContent = "❌ Errore di rete: " + err.message;
-    });
+    } else {
+      status.textContent = "❌ Errore: " + res.error;
+    }
+  })
+  .catch(err => {
+    status.textContent = "❌ Errore di rete: " + err.message;
+  });
 });
-
-  </script>
+</script>
 </body>
 </html>
-
