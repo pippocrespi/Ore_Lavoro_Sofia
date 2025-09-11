@@ -139,7 +139,7 @@ document.getElementById("btnInvia").addEventListener("click", () => {
   formData.append("pranzo", pranzo);
   formData.append("cena", cena);
 
-  fetch("https://script.google.com/macros/s/AKfycbypwcQ7hJeH11wxGUfRFfFKEp1zp5MRgkQrBf6L-nIX-rUZ0SNriILJHbCnnVfElfTZ/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbwCSUUqqT0SM6V_WAcoh-04Bpa-5ItkjXt70SUzhhpQ1l4rZSimOuD6tPijyaT9YGym/exec", {
     method: "POST",
     body: formData
   })
@@ -174,7 +174,7 @@ document.getElementById("btnInvia").addEventListener("click", () => {
   const anno = document.getElementById("anno").value;
   const status = document.getElementById("status");
 
-  fetch(`https://script.google.com/macros/s/AKfycbypwcQ7hJeH11wxGUfRFfFKEp1zp5MRgkQrBf6L-nIX-rUZ0SNriILJHbCnnVfElfTZ/exec?mese=${mese}&anno=${anno}`)
+  fetch(`https://script.google.com/macros/s/AKfycbwCSUUqqT0SM6V_WAcoh-04Bpa-5ItkjXt70SUzhhpQ1l4rZSimOuD6tPijyaT9YGym/exec?mese=${mese}&anno=${anno}`)
     .then(res => res.json())
     .then(data => {
       if(data.base64){
