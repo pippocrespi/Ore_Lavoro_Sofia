@@ -72,7 +72,7 @@
     </select>
   </label>
 
-  <button type="button" id="btnPDF">Stampa PDF</button>
+  <button type="button" id="btnPDF">Stampaa PDF</button>
 </div>
   
 
@@ -183,8 +183,8 @@ const oraEntrata = document.getElementById("oraEntrata").value;
   });
 });
 
-  //script esportare PDF
- document.getElementById("btnPDF").addEventListener("click", () => {
+  // --- Script per scaricare direttamente il PDF ---
+document.getElementById("btnPDF").addEventListener("click", () => {
   // Prendi i valori dai select
   const mese = document.getElementById("mese").value;
   const anno = document.getElementById("anno").value;
@@ -192,8 +192,22 @@ const oraEntrata = document.getElementById("oraEntrata").value;
   // URL del tuo Web App di Google Apps Script
   const scriptUrl = "https://script.google.com/macros/s/AKfycbyN0RarYLCOrw8K3Q75fbx6JeY9m74xIZn3l6oL2Wg1-YQQvfr2Zz2cvLHTApZSTpvK/exec";
 
-  // Apri il PDF in una nuova scheda che parte con il download
-  window.open(`${scriptUrl}?mese=${encodeURIComponent(mese)}&anno=${encodeURIComponent(anno)}`, "_blank");
+  // Costruisci l'URL con i parametri
+  const url = `${scriptUrl}?mese=${encodeURIComponent(mese)}&anno=${encodeURIComponent(anno)}`;
+
+  // Scarica il PDF invece di aprirlo
+  fetch(url)
+    .then(res => res.blob())
+    .then(blob => {
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = `Report_${mese}_${anno}.pdf`; // nome del file scaricato
+      link.click();
+      URL.revokeObjectURL(link.href);
+    })
+    .catch(err => {
+      alert("❌ Errore durante la generazione del PDF: " + err.message);
+    });
 });
 
 
