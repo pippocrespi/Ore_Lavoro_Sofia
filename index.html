@@ -26,9 +26,8 @@
 </head>
 <body>
 <h1>Rilevazione Presenze e Pasti</h1>
-<div class="ultimo-orario">
-  Ultimo orario inserito: <span id="ultimaData">Caricamento...</span>
-</div>
+<div id="ultimoOrario">Ultimo orario inserito: Caricamento...</div>
+
 <form id="mealForm">
   <label>Data ingresso
     <input type="date" id="dataIngresso" name="dataIngresso" required>
@@ -141,7 +140,7 @@ document.getElementById("btnInvia").addEventListener("click", () => {
   formData.append("pranzo", pranzo);
   formData.append("cena", cena);
 
-  fetch("https://script.google.com/macros/s/AKfycbyIfsq8Po5fqRUgN2oRaefhv8Bd_YaMdO3e4m-swG16wP62MUZH_TaEeiaf8PZG9TJb/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbxLxFX9MF6riYgOrJ6HkbRycDLSDqZXnA3P58K_v1_vaJb-VfLywbjNCxHkMnnkFaVN/exec", {
     method: "POST",
     body: formData
   })
@@ -177,21 +176,16 @@ document.getElementById("btnInvia").addEventListener("click", () => {
   const anno = document.getElementById("anno").value;
 
   // URL del tuo Web App di Google Apps Script
-  const scriptUrl = "https://script.google.com/macros/s/AKfycbyIfsq8Po5fqRUgN2oRaefhv8Bd_YaMdO3e4m-swG16wP62MUZH_TaEeiaf8PZG9TJb/exec";
+  const scriptUrl = "https://script.google.com/macros/s/AKfycbxLxFX9MF6riYgOrJ6HkbRycDLSDqZXnA3P58K_v1_vaJb-VfLywbjNCxHkMnnkFaVN/exec";
 
   // Apri il PDF in una nuova scheda che parte con il download
   window.open(`${scriptUrl}?mese=${encodeURIComponent(mese)}&anno=${encodeURIComponent(anno)}`, "_blank");
 });
 
   // chiede ultima data inserita
-  function caricaUltimaData() {
-  google.script.run.withSuccessHandler(function(data) {
-    document.getElementById("ultimaData").textContent = data;
-  }).getUltimaData();
-}
-
-// Chiamata all’avvio della pagina
-caricaUltimaData();
+  google.script.run.withSuccessHandler(function(data){
+    document.getElementById("ultimoOrario").textContent = "Ultimo orario inserito: " + data;
+  }).getUltimoOrario();
 
 </script>
 </body>
