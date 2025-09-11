@@ -41,6 +41,8 @@ form {
 label {
   display: flex;
   flex-direction: column;
+  padding: 0.8rem;
+  margin-top: 0.5rem;
   font-size: 22px;
   color: #333;
 }
