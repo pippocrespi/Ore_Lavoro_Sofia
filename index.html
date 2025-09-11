@@ -87,7 +87,7 @@
       <option>2026</option>
     </select>
   </label>
-  <button type="submit">Stampa PDF</button>
+  <button type="button" id="btnPDF">Stampa PDF</button>
 </form>
 
 
@@ -139,7 +139,7 @@ document.getElementById("btnInvia").addEventListener("click", () => {
   formData.append("pranzo", pranzo);
   formData.append("cena", cena);
 
-  fetch("https://script.google.com/macros/s/AKfycbxb_Pu9W6w-uDMDsfBqSeAy3WCavXbbPqmoENbk2zc84gCWCzlryfKDS9ccfn_9Ts12/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbxiHEJ8RjcvwgQoplK8JPw9VDucZV30CLkLWczx26DcKUj_Pk5f3ZhwrjoeDys5ipUU/exec", {
     method: "POST",
     body: formData
   })
@@ -166,6 +166,17 @@ document.getElementById("btnInvia").addEventListener("click", () => {
   .catch(err => {
     status.textContent = "❌ Errore di rete: " + err.message;
   });
+});
+
+  //script esportare PDF
+  document.getElementById("btnPDF").addEventListener("click", () => {
+  const mese = document.getElementById("mese").value;
+  const anno = document.getElementById("anno").value;
+
+  const url = `https://script.google.com/macros/s/AKfycbxiHEJ8RjcvwgQoplK8JPw9VDucZV30CLkLWczx26DcKUj_Pk5f3ZhwrjoeDys5ipUU/exec?mese=${mese}&anno=${anno}`;
+  
+  // apre il PDF in una nuova scheda
+  window.open(url, "_blank");
 });
 </script>
 </body>
