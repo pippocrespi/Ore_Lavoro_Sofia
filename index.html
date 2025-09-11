@@ -62,6 +62,68 @@
 
 <p id="status"></p>
 
+  <h1>Stampa PDF Google Sheet</h1>
+
+<div class="pdf-section">
+  <label>Mese:
+    <select id="mese">
+      <option value="Gennaio">Gennaio</option>
+      <option value="Febbraio">Febbraio</option>
+      <option value="Marzo">Marzo</option>
+      <option value="Aprile">Aprile</option>
+      <option value="Maggio">Maggio</option>
+      <option value="Giugno">Giugno</option>
+      <option value="Luglio">Luglio</option>
+      <option value="Agosto">Agosto</option>
+      <option value="Settembre" selected>Settembre</option>
+      <option value="Ottobre">Ottobre</option>
+      <option value="Novembre">Novembre</option>
+      <option value="Dicembre">Dicembre</option>
+    </select>
+  </label>
+
+  <label>Anno:
+    <select id="anno">
+      <option value="2024">2024</option>
+      <option value="2025" selected>2025</option>
+      <option value="2026">2026</option>
+    </select>
+  </label>
+
+  <button type="button" id="btnPDF">Stampa PDF</button>
+  <p id="status"></p>
+</div>
+
+<script>
+const btnPDF = document.getElementById("btnPDF");
+const status = document.getElementById("status");
+
+btnPDF.addEventListener("click", () => {
+  const mese = document.getElementById("mese").value;
+  const anno = document.getElementById("anno").value;
+
+  status.textContent = "⏳ Generazione PDF in corso...";
+
+  fetch(`https://script.google.com/macros/s/AKfycbwxKFyJSxpPKaDzoM3BPTEssXtTVv-1DL4i0L1cm2Rha7MLWOk_8RXvlKsLjTmgEg4m/exec?mese=${mese}&anno=${anno}`)
+    .then(r => r.json())
+    .then(res => {
+      if(res.success){
+        // crea link per scaricare il PDF
+        const a = document.createElement("a");
+        a.href = "data:application/pdf;base64," + res.base64;
+        a.download = res.nome;
+        a.click();
+        status.textContent = "✅ PDF generato con successo: " + res.nome;
+      } else {
+        status.textContent = "❌ Errore: " + res.error;
+      }
+    })
+    .catch(err => {
+      status.textContent = "❌ Errore di rete: " + err.message;
+    });
+});
+</script>
+
 <script>
 const status = document.getElementById("status");
 const btnPranzo = document.getElementById("btnPranzo");
