@@ -72,7 +72,7 @@
     </select>
   </label>
 
-  <button type="button" id="btnPDF">Stampaa PDF</button>
+  <button type="button" id="btnPDF">Stampa PDF</button>
 </div>
   
 
@@ -144,7 +144,7 @@ const oraEntrata = document.getElementById("oraEntrata").value;
   formData.append("pranzo", pranzo);
   formData.append("cena", cena);
 
-  fetch("https://script.google.com/macros/s/AKfycbyN0RarYLCOrw8K3Q75fbx6JeY9m74xIZn3l6oL2Wg1-YQQvfr2Zz2cvLHTApZSTpvK/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbzYTmuVrtOda6KGy1Yx_uj-Prg0UMSTUckEenAHefzZMNkEsbH4UtJz3DTFka45Xy6o/exec", {
     method: "POST",
     body: formData
   })
@@ -183,35 +183,13 @@ const oraEntrata = document.getElementById("oraEntrata").value;
   });
 });
 
-  // --- Script per scaricare direttamente il PDF ---
-document.getElementById("btnPDF").addEventListener("click", () => {
-  // Prendi i valori dai select
+  //scarica il pDF
+ document.getElementById("btnPDF").addEventListener("click", () => {
   const mese = document.getElementById("mese").value;
   const anno = document.getElementById("anno").value;
-
-  // URL del tuo Web App di Google Apps Script
-  const scriptUrl = "https://script.google.com/macros/s/AKfycbyN0RarYLCOrw8K3Q75fbx6JeY9m74xIZn3l6oL2Wg1-YQQvfr2Zz2cvLHTApZSTpvK/exec";
-
-  // Costruisci l'URL con i parametri
-  const url = `${scriptUrl}?mese=${encodeURIComponent(mese)}&anno=${encodeURIComponent(anno)}`;
-
-  // Scarica il PDF invece di aprirlo
-  fetch(url)
-    .then(res => res.blob())
-    .then(blob => {
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = `Report_${mese}_${anno}.pdf`; // nome del file scaricato
-      link.click();
-      URL.revokeObjectURL(link.href);
-    })
-    .catch(err => {
-      alert("❌ Errore durante la generazione del PDF: " + err.message);
-    });
+  const scriptUrl = "https://script.google.com/macros/s/AKfycbzYTmuVrtOda6KGy1Yx_uj-Prg0UMSTUckEenAHefzZMNkEsbH4UtJz3DTFka45Xy6o/exec";
+  window.open(`${scriptUrl}?mese=${encodeURIComponent(mese)}&anno=${encodeURIComponent(anno)}`, "_blank");
 });
-
-
-
 
 </script>
 </body>
