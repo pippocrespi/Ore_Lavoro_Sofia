@@ -139,7 +139,7 @@ document.getElementById("btnInvia").addEventListener("click", () => {
   formData.append("pranzo", pranzo);
   formData.append("cena", cena);
 
-  fetch("https://script.google.com/macros/s/AKfycbxiHEJ8RjcvwgQoplK8JPw9VDucZV30CLkLWczx26DcKUj_Pk5f3ZhwrjoeDys5ipUU/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbypwcQ7hJeH11wxGUfRFfFKEp1zp5MRgkQrBf6L-nIX-rUZ0SNriILJHbCnnVfElfTZ/exec", {
     method: "POST",
     body: formData
   })
@@ -169,21 +169,27 @@ document.getElementById("btnInvia").addEventListener("click", () => {
 });
 
   //script esportare PDF
-  window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("btnPDF").addEventListener("click", () => {
-    const mese = document.getElementById("mese").value;
-    const anno = document.getElementById("anno").value;
+  const mese = document.getElementById("mese").value;
+  const anno = document.getElementById("anno").value;
+  const status = document.getElementById("status");
 
-    const url = `https://script.google.com/macros/s/AKfycbxiHEJ8RjcvwgQoplK8JPw9VDucZV30CLkLWczx26DcKUj_Pk5f3ZhwrjoeDys5ipUU/exec?mese=${mese}&anno=${anno}`;
-
-    // Crea link temporaneo per scaricare
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${mese}_${anno}_Sofia.pdf`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  });
+  fetch(`https://script.google.com/macros/s/AKfycbypwcQ7hJeH11wxGUfRFfFKEp1zp5MRgkQrBf6L-nIX-rUZ0SNriILJHbCnnVfElfTZ/exec?mese=${mese}&anno=${anno}`)
+    .then(res => res.json())
+    .then(data => {
+      if(data.base64){
+        const a = document.createElement("a");
+        a.href = "data:application/pdf;base64," + data.base64;
+        a.download = data.nome;
+        a.click();
+        status.textContent = "✅ PDF generato e scaricato!";
+      } else {
+        status.textContent = "❌ Errore: nessun PDF generato";
+      }
+    })
+    .catch(err => {
+      status.textContent = "❌ Errore rete: " + err.message;
+    });
 });
 
 </script>
