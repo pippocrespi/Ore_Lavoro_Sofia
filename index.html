@@ -128,6 +128,13 @@ window.addEventListener("DOMContentLoaded", () => {
 
 // invio dati
 document.getElementById("btnInvia").addEventListener("click", () => {
+
+// --- CONTROLLO OBBLIGO ORARI ---
+  if (!oraEntrata || !oraUscita) {
+    status.textContent = "❌ Inserisci sia l'orario di entrata che di uscita!";
+    return; // blocca l'invio
+  }
+  
   const formData = new FormData();
   formData.append("dataIngresso", document.getElementById("dataIngresso").value);
   formData.append("oraEntrata", document.getElementById("oraEntrata").value);
