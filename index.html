@@ -139,7 +139,7 @@ document.getElementById("btnInvia").addEventListener("click", () => {
   formData.append("pranzo", pranzo);
   formData.append("cena", cena);
 
-  fetch("https://script.google.com/macros/s/AKfycbySuMOVnba5M7S2EwaJNGXWgxQ9cZ0Uz3A9DgbRfEv92KE8yxhMUKOSBNkY6b7ndsEn/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbzGFSV-x7I8sG2w6EDS5QFlXR8oMEudMkyZjP2E-vLZn0EyhPxL6Lmamwanl-x9dnAn/exec", {
     method: "POST",
     body: formData
   })
@@ -173,12 +173,10 @@ document.getElementById("btnInvia").addEventListener("click", () => {
   const mese = document.getElementById("mese").value;
   const anno = document.getElementById("anno").value;
 
-  // URL del Web App Apps Script
-  const webAppUrl = "https://script.google.com/macros/s/AKfycbySuMOVnba5M7S2EwaJNGXWgxQ9cZ0Uz3A9DgbRfEv92KE8yxhMUKOSBNkY6b7ndsEn/exec";
-
-  // Apri il PDF direttamente in una nuova scheda
-  window.open(`${webAppUrl}?mese=${mese}&anno=${anno}`);
+  // Vai direttamente al Web App, il PDF si scarica subito
+  window.location.href = `https://script.google.com/macros/s/AKfycbzGFSV-x7I8sG2w6EDS5QFlXR8oMEudMkyZjP2E-vLZn0EyhPxL6Lmamwanl-x9dnAn/exec?mese=${mese}&anno=${anno}`;
 });
+
 
 </script>
 </body>
