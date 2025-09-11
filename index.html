@@ -72,7 +72,7 @@
     </select>
   </label>
 
-  <button type="button" id="btnPDF">Stampa PDF</button>
+  <button type="button" id="btnPDF">Stampaa PDF</button>
 </div>
   
 
@@ -144,7 +144,7 @@ const oraEntrata = document.getElementById("oraEntrata").value;
   formData.append("pranzo", pranzo);
   formData.append("cena", cena);
 
-  fetch("https://script.google.com/macros/s/AKfycby6K2oxtg93GcSOEGnI5xJAg_lR5jSl38aaLoFbkaAfpS_BGzuB45laZCbEzcKqo0bO/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbyR6Qf9LJJ9adHRlD7F04_hCxRZW-7CB4Frc7X-uOp21-S76HFRcD5JGhrcZ6J2CA/exec", {
     method: "POST",
     body: formData
   })
@@ -187,7 +187,7 @@ const oraEntrata = document.getElementById("oraEntrata").value;
  document.getElementById("btnPDF").addEventListener("click", () => {
   const mese = document.getElementById("mese").value;
   const anno = document.getElementById("anno").value;
-  const scriptUrl = "https://script.google.com/macros/s/AKfycby6K2oxtg93GcSOEGnI5xJAg_lR5jSl38aaLoFbkaAfpS_BGzuB45laZCbEzcKqo0bO/exec";
+  const scriptUrl = "https://script.google.com/macros/s/AKfycbyR6Qf9LJJ9adHRlD7F04_hCxRZW-7CB4Frc7X-uOp21-S76HFRcD5JGhrcZ6J2CA/exec";
   window.open(`${scriptUrl}?mese=${encodeURIComponent(mese)}&anno=${encodeURIComponent(anno)}`, "_blank");
 });
 
