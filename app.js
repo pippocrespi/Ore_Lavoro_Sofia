@@ -1,10 +1,13 @@
-document.addEventListener("DOMContentLoaded", function() {
-  const btn = document.getElementById("btnInviaDati");
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxcdBrQpeYWla0_wIHJ_oxLeyA2_s9XdN0MYk6bdLwoocgKmn-h7rtmQ5rqazInhBfC/exec"; 
+
+document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("mealForm");
   const status = document.getElementById("status");
+  const btnInvia = document.getElementById("btnInvia");
 
-  btn.addEventListener("click", async function() {
-    const dati = {
+  btnInvia.addEventListener("click", async () => {
+    // Prende i dati dal form
+    const data = {
       dataIngresso: form.dataIngresso.value,
       oraEntrata: form.oraEntrata.value,
       oraUscita: form.oraUscita.value,
@@ -12,27 +15,38 @@ document.addEventListener("DOMContentLoaded", function() {
       cena: form.cena.checked
     };
 
-    status.textContent = "⏳ Invio dati...";
-
     try {
-      const response = await fetch("https://script.google.com/macros/s/AKfycby3ceh7EpDY7x3xETuqc6kqTiPjjmdhwMILXXXQB7YPo5yUXaT4fxHISGAfv3YXV1w-/exec", {
+      // Invia i dati allo script Google
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
-        body: JSON.stringify(dati),
-        headers: { "Content-Type": "application/json" }
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json"
+        }
       });
 
       const result = await response.json();
 
-      if(result.status === "ok") {
-        status.textContent = `✅ Dati salvati in ${result.nomeFoglio}`;
+      if (result.success) {
+        status.textContent = "✅ " + result.message;
+        status.style.color = "green";
         form.reset();
-      } else {
-        status.textContent = `❌ Errore: ${result.message}`;
-      }
 
-    } catch(err) {
-      status.textContent = "❌ Errore durante l'invio: " + err;
-      console.error(err);
+        // Reimposta la data a oggi
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        let mm = today.getMonth() + 1;
+        let dd = today.getDate();
+        if (mm < 10) mm = "0" + mm;
+        if (dd < 10) dd = "0" + dd;
+        form.dataIngresso.value = `${yyyy}-${mm}-${dd}`;
+      } else {
+        status.textContent = "❌ Errore: " + result.error;
+        status.style.color = "red";
+      }
+    } catch (err) {
+      status.textContent = "❌ Connessione fallita: " + err.message;
+      status.style.color = "red";
     }
   });
 });
