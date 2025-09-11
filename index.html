@@ -26,7 +26,7 @@
 </head>
 <body>
 <h1>Rilevazione Presenze e Pasti</h1>
-<div id="ultimoOrario">Ultimo orario inserito: Caricamento...</div>
+<div id="ultimoOrario">Ultimo orario inserito: Caricamento0...</div>
 
 <form id="mealForm">
   <label>Data ingresso
@@ -140,7 +140,7 @@ document.getElementById("btnInvia").addEventListener("click", () => {
   formData.append("pranzo", pranzo);
   formData.append("cena", cena);
 
-  fetch("https://script.google.com/macros/s/AKfycbxLxFX9MF6riYgOrJ6HkbRycDLSDqZXnA3P58K_v1_vaJb-VfLywbjNCxHkMnnkFaVN/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbxTkxBV4UK6DHwjlGaVXWwST3HlmeNKxV49xHUyRTag9QlYCxI67ZrhvjSD5CWHbGHV/exec", {
     method: "POST",
     body: formData
   })
@@ -176,16 +176,22 @@ document.getElementById("btnInvia").addEventListener("click", () => {
   const anno = document.getElementById("anno").value;
 
   // URL del tuo Web App di Google Apps Script
-  const scriptUrl = "https://script.google.com/macros/s/AKfycbxLxFX9MF6riYgOrJ6HkbRycDLSDqZXnA3P58K_v1_vaJb-VfLywbjNCxHkMnnkFaVN/exec";
+  const scriptUrl = "https://script.google.com/macros/s/AKfycbxTkxBV4UK6DHwjlGaVXWwST3HlmeNKxV49xHUyRTag9QlYCxI67ZrhvjSD5CWHbGHV/exec";
 
   // Apri il PDF in una nuova scheda che parte con il download
   window.open(`${scriptUrl}?mese=${encodeURIComponent(mese)}&anno=${encodeURIComponent(anno)}`, "_blank");
 });
 
   // chiede ultima data inserita
-  google.script.run.withSuccessHandler(function(data){
-    document.getElementById("ultimoOrario").textContent = "Ultimo orario inserito: " + data;
-  }).getUltimoOrario();
+   fetch("https://script.google.com/macros/s/AKfycbxTkxBV4UK6DHwjlGaVXWwST3HlmeNKxV49xHUyRTag9QlYCxI67ZrhvjSD5CWHbGHV/exec")  // metti qui il link al nuovo web app
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById("ultimoOrario").textContent = "Ultimo orario inserito: " + data.ultimoOrario;
+    })
+    .catch(err => {
+      console.error(err);
+      document.getElementById("ultimoOrario").textContent = "Errore nel caricamento";
+    });
 
 </script>
 </body>
