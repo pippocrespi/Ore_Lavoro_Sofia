@@ -62,6 +62,18 @@
 
 <p id="status"></p>
 
+  <!-- PDF -->
+<label>Mese:
+  <select id="mese">
+    <option>Gennaio</option><option>Febbraio</option>...</select>
+</label>
+<label>Anno:
+  <select id="anno">
+    <option>2025</option><option>2026</option></select>
+</label>
+<button type="button" id="btnPDF">Stampa PDF</button>
+
+<p id="status"></p>
   
 
 <script>
@@ -110,7 +122,7 @@ document.getElementById("btnInvia").addEventListener("click", () => {
   formData.append("pranzo", pranzo);
   formData.append("cena", cena);
 
-  fetch("https://script.google.com/macros/s/AKfycbwxKFyJSxpPKaDzoM3BPTEssXtTVv-1DL4i0L1cm2Rha7MLWOk_8RXvlKsLjTmgEg4m/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbxeQwpd4ES2Of90P34vufbqSg4kdMX6CXM3L3Cv7skgpMfq4bWlR6ysIf9xj8V-CAjZ/exec", {
     method: "POST",
     body: formData
   })
@@ -137,6 +149,29 @@ document.getElementById("btnInvia").addEventListener("click", () => {
   .catch(err => {
     status.textContent = "❌ Errore di rete: " + err.message;
   });
+});
+
+  // stampa pdf
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxeQwpd4ES2Of90P34vufbqSg4kdMX6CXM3L3Cv7skgpMfq4bWlR6ysIf9xj8V-CAjZ/exec";
+  document.getElementById("btnPDF").addEventListener("click", ()=>{
+  const mese = document.getElementById("mese").value;
+  const anno = document.getElementById("anno").value;
+  fetch(`${SCRIPT_URL}?mese=${mese}&anno=${anno}`)
+    .then(r=>r.json())
+    .then(res=>{
+      if(res.success){
+        const a = document.createElement("a");
+        a.href = "data:application/pdf;base64,"+res.base64;
+        a.download = res.nome;
+        a.click();
+        status.textContent = "✅ PDF generato!";
+      }else{
+        status.textContent = "❌ Errore: "+res.error;
+      }
+    })
+    .catch(err=>{
+      status.textContent = "❌ Errore di rete: "+err.message;
+    });
 });
 </script>
 </body>
