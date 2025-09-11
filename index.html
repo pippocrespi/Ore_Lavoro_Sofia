@@ -63,34 +63,34 @@
 <p id="status"></p>
 
   <!-- PDF -->
-<form id="pdfForm" target="_blank" action="https://script.google.com/macros/s/AKfycbxb_Pu9W6w-uDMDsfBqSeAy3WCavXbbPqmoENbk2zc84gCWCzlryfKDS9ccfn_9Ts12/exec" method="get">
+<!-- Sezione Stampa PDF -->
+<div class="pdf-section">
   <label>Mese:
-    <select name="mese" id="mese">
-      <option>Gennaio</option>
-      <option>Febbraio</option>
-      <option>Marzo</option>
-      <option>Aprile</option>
-      <option>Maggio</option>
-      <option>Giugno</option>
-      <option>Luglio</option>
-      <option>Agosto</option>
-      <option>Settembre</option>
-      <option>Ottobre</option>
-      <option>Novembre</option>
-      <option>Dicembre</option>
+    <select id="mese">
+      <option value="Gennaio">Gennaio</option>
+      <option value="Febbraio">Febbraio</option>
+      <option value="Marzo">Marzo</option>
+      <option value="Aprile">Aprile</option>
+      <option value="Maggio">Maggio</option>
+      <option value="Giugno">Giugno</option>
+      <option value="Luglio">Luglio</option>
+      <option value="Agosto">Agosto</option>
+      <option value="Settembre">Settembre</option>
+      <option value="Ottobre">Ottobre</option>
+      <option value="Novembre">Novembre</option>
+      <option value="Dicembre">Dicembre</option>
     </select>
   </label>
+
   <label>Anno:
-    <select name="anno" id="anno">
-      <option>2024</option>
-      <option selected>2025</option>
-      <option>2026</option>
+    <select id="anno">
+      <option value="2025" selected>2025</option>
+      <option value="2026">2026</option>
     </select>
   </label>
-  <button type="button" id="btnPDF">Stampaa PDF</button>
-</form>
 
-
+  <button type="button" id="btnPDF">Stampa PDF</button>
+</div>
   
 
 <script>
@@ -139,7 +139,7 @@ document.getElementById("btnInvia").addEventListener("click", () => {
   formData.append("pranzo", pranzo);
   formData.append("cena", cena);
 
-  fetch("https://script.google.com/macros/s/AKfycbwCSUUqqT0SM6V_WAcoh-04Bpa-5ItkjXt70SUzhhpQ1l4rZSimOuD6tPijyaT9YGym/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbySuMOVnba5M7S2EwaJNGXWgxQ9cZ0Uz3A9DgbRfEv92KE8yxhMUKOSBNkY6b7ndsEn/exec", {
     method: "POST",
     body: formData
   })
@@ -169,27 +169,15 @@ document.getElementById("btnInvia").addEventListener("click", () => {
 });
 
   //script esportare PDF
-  document.getElementById("btnPDF").addEventListener("click", () => {
+ document.getElementById("btnPDF").addEventListener("click", () => {
   const mese = document.getElementById("mese").value;
   const anno = document.getElementById("anno").value;
-  const status = document.getElementById("status");
 
-  fetch(`https://script.google.com/macros/s/AKfycbwCSUUqqT0SM6V_WAcoh-04Bpa-5ItkjXt70SUzhhpQ1l4rZSimOuD6tPijyaT9YGym/exec?mese=${mese}&anno=${anno}`)
-    .then(res => res.json())
-    .then(data => {
-      if(data.base64){
-        const a = document.createElement("a");
-        a.href = "data:application/pdf;base64," + data.base64;
-        a.download = data.nome;
-        a.click();
-        status.textContent = "✅ PDF generato e scaricato!";
-      } else {
-        status.textContent = "❌ Errore: nessun PDF generato";
-      }
-    })
-    .catch(err => {
-      status.textContent = "❌ Errore rete: " + err.message;
-    });
+  // URL del Web App Apps Script
+  const webAppUrl = "https://script.google.com/macros/s/AKfycbySuMOVnba5M7S2EwaJNGXWgxQ9cZ0Uz3A9DgbRfEv92KE8yxhMUKOSBNkY6b7ndsEn/exec";
+
+  // Apri il PDF direttamente in una nuova scheda
+  window.open(`${webAppUrl}?mese=${mese}&anno=${anno}`);
 });
 
 </script>
