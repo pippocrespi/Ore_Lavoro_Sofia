@@ -169,7 +169,7 @@
       formData.append("pranzo", pranzo);
       formData.append("cena", cena);
 
-      fetch("https://script.google.com/macros/s/AKfycby0ZSmWvk2-omPstjBDqf7JoH_lgafrLDtIsa4sy-gnctCkv94U24YA5-PcKCq-LZZu/exec", {
+      fetch("https://script.google.com/macros/s/AKfycbwxKFyJSxpPKaDzoM3BPTEssXtTVv-1DL4i0L1cm2Rha7MLWOk_8RXvlKsLjTmgEg4m/exec", {
         method: "POST",
         body: formData
       })
@@ -187,27 +187,33 @@
     });
 
     // Stampa PDF
-    document.getElementById("btnPDF").addEventListener("click", () => {
-      const mese = document.getElementById("mese").value;
-      const anno = document.getElementById("anno").value;
+    // Seleziono il pulsante e lo status
+const btnPDF = document.getElementById("btnPDF");
+const status = document.getElementById("status");
 
-      fetch(`https://script.google.com/macros/s/AKfycby0ZSmWvk2-omPstjBDqf7JoH_lgafrLDtIsa4sy-gnctCkv94U24YA5-PcKCq-LZZu/exec?mese=${mese}&anno=${anno}`)
-      .then(r => r.json())
-      .then(res => {
-        if(res.success){
-          const a = document.createElement("a");
-          a.href = "data:application/pdf;base64," + res.base64;
-          a.download = res.nome;
-          a.click();
-          status.textContent = "✅ PDF generato!";
-        } else {
-          status.textContent = "❌ Errore: " + res.error;
-        }
-      })
-      .catch(err => {
-        status.textContent = "❌ Errore di rete: " + err.message;
-      });
+btnPDF.addEventListener("click", () => {
+  const mese = document.getElementById("mese").value;
+  const anno = document.getElementById("anno").value;
+
+  // Chiamata GET al Web App
+  fetch(`https://script.google.com/macros/s/AKfycbwxKFyJSxpPKaDzoM3BPTEssXtTVv-1DL4i0L1cm2Rha7MLWOk_8RXvlKsLjTmgEg4m/exec?mese=${mese}&anno=${anno}`)
+    .then(response => response.json())
+    .then(res => {
+      if (res.success) {
+        const a = document.createElement("a");
+        a.href = "data:application/pdf;base64," + res.base64;
+        a.download = res.nome;
+        a.click();
+        status.textContent = "✅ PDF generato!";
+      } else {
+        status.textContent = "❌ Errore: " + res.error;
+      }
+    })
+    .catch(err => {
+      status.textContent = "❌ Errore di rete: " + err.message;
     });
+});
+
   </script>
 </body>
 </html>
