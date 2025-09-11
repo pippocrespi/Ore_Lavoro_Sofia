@@ -63,29 +63,33 @@
 <p id="status"></p>
 
   <!-- PDF -->
-<form id="pdfForm" target="_blank" action="https://script.google.com/macros/s/AKfycbyyiSjAgltOfAcmOQwVeCKODfO40jphZwhYpMzhvRfRKFeXnGYkCWyNQFcos5cpIdBe/exec" method="get">
+<form id="pdfForm" target="_blank" action="https://script.google.com/macros/s/AKfycbxb_Pu9W6w-uDMDsfBqSeAy3WCavXbbPqmoENbk2zc84gCWCzlryfKDS9ccfn_9Ts12/exec" method="get">
   <label>Mese:
     <select name="mese">
       <option>Gennaio</option>
       <option>Febbraio</option>
       <option>Marzo</option>
       <option>Aprile</option>
-      <option>Marzo</option>
-      <option>Marzo</option>
-      <option>Marzo</option>
-      <option>Marzo</option>
+      <option>Maggio</option>
+      <option>Giugno</option>
+      <option>Luglio</option>
+      <option>Agosto</option>
       <option>Settembre</option>
-      <option>Marzo</option>
+      <option>Ottobre</option>
+      <option>Novembre</option>
+      <option>Dicembre</option>
     </select>
   </label>
   <label>Anno:
     <select name="anno">
+      <option>2024</option>
       <option selected>2025</option>
       <option>2026</option>
     </select>
   </label>
   <button type="submit">Stampa PDF</button>
 </form>
+
 
   
 
@@ -135,7 +139,7 @@ document.getElementById("btnInvia").addEventListener("click", () => {
   formData.append("pranzo", pranzo);
   formData.append("cena", cena);
 
-  fetch("https://script.google.com/macros/s/AKfycbyyiSjAgltOfAcmOQwVeCKODfO40jphZwhYpMzhvRfRKFeXnGYkCWyNQFcos5cpIdBe/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbxb_Pu9W6w-uDMDsfBqSeAy3WCavXbbPqmoENbk2zc84gCWCzlryfKDS9ccfn_9Ts12/exec", {
     method: "POST",
     body: formData
   })
